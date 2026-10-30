@@ -37,23 +37,43 @@ export async function syncMembers(env) {
   return list.length;
 }
 
+/* Discord's audit action types → [log type, verb, what the target id points at]. */
 const AUDIT = {
-  10: ['channel', 'أنشأ رومًا'], 11: ['channel', 'عدّل رومًا'], 12: ['channel', 'حذف رومًا'],
-  20: ['kick', 'طرد'], 22: ['ban', 'حظر'], 23: ['unban', 'فكّ الحظر عن'],
-  24: ['nick', 'عدّل'], 25: ['role', 'غيّر رتب'], 26: ['other', 'نقل'], 27: ['other', 'فصل'],
-  28: ['other', 'أضاف البوت'], 72: ['msg_delete', 'حذف رسالة لـ'], 73: ['msg_delete', 'حذف رسائل في']
+  1: ['other', 'عدّل إعدادات السيرفر', 'none'],
+  10: ['channel', 'أنشأ الروم', 'channel'], 11: ['channel', 'عدّل الروم', 'channel'], 12: ['channel', 'حذف الروم', 'channel'],
+  13: ['channel', 'أضاف صلاحيات في', 'channel'], 14: ['channel', 'عدّل صلاحيات', 'channel'], 15: ['channel', 'حذف صلاحيات من', 'channel'],
+  20: ['kick', 'طرد', 'user'], 21: ['kick', 'نظّف الأعضاء غير النشطين', 'none'], 22: ['ban', 'حظر', 'user'], 23: ['unban', 'فكّ الحظر عن', 'user'],
+  24: ['nick', 'عدّل', 'user'], 25: ['role', 'غيّر رتب', 'user'], 26: ['other', 'نقل أعضاء بين الرومات الصوتية', 'none'],
+  27: ['other', 'فصل عضوًا من روم صوتي', 'none'], 28: ['other', 'أضاف البوت', 'user'],
+  30: ['role', 'أنشأ الرتبة', 'role'], 31: ['role', 'عدّل الرتبة', 'role'], 32: ['role', 'حذف الرتبة', 'role'],
+  40: ['other', 'أنشأ دعوة', 'none'], 41: ['other', 'عدّل دعوة', 'none'], 42: ['other', 'حذف دعوة', 'none'],
+  50: ['other', 'أنشأ Webhook', 'none'], 51: ['other', 'عدّل Webhook', 'none'], 52: ['other', 'حذف Webhook', 'none'],
+  60: ['other', 'أضاف إيموجي', 'none'], 61: ['other', 'عدّل إيموجي', 'none'], 62: ['other', 'حذف إيموجي', 'none'],
+  72: ['msg_delete', 'حذف رسالة لـ', 'user'], 73: ['msg_delete', 'حذف رسائل بالجملة', 'none'],
+  74: ['other', 'ثبّت رسالة لـ', 'user'], 75: ['other', 'ألغى تثبيت رسالة لـ', 'user'],
+  80: ['other', 'أضاف تطبيقًا للسيرفر', 'none'], 81: ['other', 'عدّل تطبيقًا', 'none'], 82: ['other', 'أزال تطبيقًا', 'none'],
+  100: ['other', 'أنشأ فعالية', 'none'], 101: ['other', 'عدّل فعالية', 'none'], 102: ['other', 'حذف فعالية', 'none'],
+  110: ['channel', 'أنشأ ثريد', 'channel'], 111: ['channel', 'عدّل ثريد', 'channel'], 112: ['channel', 'حذف ثريد', 'channel'],
+  121: ['other', 'عدّل صلاحيات أوامر تطبيق', 'none'],
+  140: ['other', 'أنشأ قاعدة AutoMod', 'none'], 141: ['other', 'عدّل قاعدة AutoMod', 'none'], 142: ['other', 'حذف قاعدة AutoMod', 'none'],
+  143: ['msg_delete', 'AutoMod حجب رسالة لـ', 'user'], 145: ['timeout', 'AutoMod أسكت', 'user']
 };
 export async function syncAudit(env) {
   const d = discord(env);
-  const res = await d.auditLog();
+  const [res, chans] = await Promise.all([d.auditLog(), d.channels().catch(() => [])]);
   const names = new Map((res.users || []).map(u => [u.id, u.global_name || u.username]));
   const known = await namesFromDb(env);
   const nm = id => names.get(id) || known.get(id) || (id ? 'عضو ' + id.slice(-4) : '');
+  const chName = new Map(chans.map(c => [c.id, c.name]).concat((res.threads || []).map(t => [t.id, t.name])));
+  const gr = await env.DB.prepare("SELECT value FROM sync_state WHERE key='guild_roles'").first();
+  const roleName = new Map((gr ? JSON.parse(gr.value) : []).map(r => [r.id, r.name]));
+  const apps = new Map((res.integrations || []).map(i => [i.id, i.name]).concat((res.application_commands || []).map(a => [a.application_id, a.name])));
   let added = 0;
   for (const e of res.audit_log_entries || []) {
-    const [type0, verb] = AUDIT[e.action_type] || ['other', 'إجراء ' + e.action_type];
+    const [type0, verb, kind] = AUDIT[e.action_type] || ['other', 'إجراء إداري (' + e.action_type + ')', 'none'];
     let type = type0, what = '';
     const ch = e.changes || [];
+    const changed = key => ch.find(c => c.key === key) || {};
     if (e.action_type === 24) {
       const t = ch.find(c => c.key === 'communication_disabled_until');
       const n = ch.find(c => c.key === 'nick');
@@ -65,10 +85,18 @@ export async function syncAudit(env) {
       const rem = (ch.find(c => c.key === '$remove') || {}).new_value || [];
       what = [add.length ? '+' + add.map(r => r.name).join('، +') : '', rem.length ? '−' + rem.map(r => r.name).join('، −') : ''].filter(Boolean).join(' ');
     }
-    const isChannel = e.action_type >= 10 && e.action_type <= 12;
-    const target = isChannel ? (ch.find(c => c.key === 'name') || {}).new_value || '' : nm(e.target_id);
+    const isChannel = kind === 'channel';
+    // A deleted channel or role is gone from the live lists; its old name is in the change set.
+    const target = kind === 'channel' ? '#' + (chName.get(e.target_id) || changed('name').new_value || changed('name').old_value || 'روم')
+      : kind === 'role' ? '«' + (roleName.get(e.target_id) || changed('name').new_value || changed('name').old_value || 'رتبة') + '»'
+      : kind === 'user' ? nm(e.target_id)
+      : e.action_type >= 80 && e.action_type <= 82 ? (apps.get(e.target_id) || changed('name').new_value || '')
+      : '';
+    // For a permission overwrite, say whose permissions: a role or a member.
+    const who = e.action_type >= 13 && e.action_type <= 15 && e.options
+      ? ' (' + (e.options.type === '0' || e.options.type === 0 ? 'رتبة «' + (e.options.role_name || roleName.get(e.options.id) || '') + '»' : nm(e.options.id)) + ')' : '';
     const summary = (e.action_type === 24 && what && what !== 'لقب' ? what : verb + (what === 'لقب' ? ' لقب' : '')) +
-      ' ' + target + (e.action_type === 25 && what ? ' (' + what + ')' : '');
+      (target ? ' ' + target : '') + who + (e.action_type === 25 && what ? ' (' + what + ')' : '');
     const r = await env.DB.prepare(
       `INSERT OR IGNORE INTO logs (id, source, ref, type, actor_id, target_id, summary, detail, at)
        VALUES (?, 'audit', ?, ?, ?, ?, ?, ?, ?)`
