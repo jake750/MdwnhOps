@@ -9,7 +9,7 @@ crons = ["*/5 * * * *"]
 [[d1_databases]]
 binding = "DB"
 database_name = "mdwnh-ops"
-database_id = "REPLACE_AFTER_d1_create"
+database_id = "2d704666-cdb8-48c8-bc45-99a1b25011d5"
 
 [vars]
 GUILD_ID = "1048483381714878505"
