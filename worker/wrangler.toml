@@ -16,7 +16,7 @@ GUILD_ID = "1048483381714878505"
 CLIENT_ID = "1565517928059768973"
 SITE_URL = "https://jake750.github.io/MdwnhOps/"
 # The app's PUBLIC key (Developer Portal → General Information). Not a secret.
-PUBLIC_KEY = ""
+PUBLIC_KEY = "5a4d9f76465d95982d3c1340ff7499ceb22a675f3c6276f6e9ef530bf257c26f"
 DEMO = "0"
 
 # Secrets — set them yourself, never commit them:
