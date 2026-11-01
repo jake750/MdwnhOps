@@ -344,7 +344,7 @@ function paintPoints() {
     '</div>' +
     '<div class="op-cols">' +
       '<div><h3 class="op-h">الأرصدة</h3>' + (board.length ? '<ol class="op-board">' + board.map(({ m, t }, i) =>
-        '<li><span class="op-rank">' + ar(i + 1) + '</span><img src="' + esc(m.avatar) + '" alt="" loading="lazy"><b>' + esc(m.name) + '</b>' +
+        '<li><span class="op-rank">' + ar(i + 1) + '</span><button type="button" class="op-who" data-act="pt-ledger" data-id="' + esc(m.id) + '" title="سجل نقاطه"><img src="' + esc(m.avatar) + '" alt="" loading="lazy"><b>' + esc(m.name) + '</b></button>' +
         '<em>' + ar(t) + '</em><button type="button" class="op-ico" data-act="pt-adjust" data-id="' + esc(m.id) + '" aria-label="تعديل يدوي" title="تعديل يدوي">' + ICON.edit + '</button></li>').join('') + '</ol>'
         : empty('لا نقاط بعد.')) +
         '<button type="button" class="op-link" data-act="pt-adjust">✏️ تعديل يدوي لعضو آخر</button></div>' +
@@ -354,13 +354,13 @@ function paintPoints() {
   return el;
 }
 const goLabel = () => { const n = Object.keys(ptSel).length; return n ? 'أضف ' + ar(ptAmt) + ' نقطة لـ ' + ar(n) + (n === 1 ? ' عضو' : ' أعضاء') : 'اختر الأعضاء'; };
-function logRow(l) {
+function logRow(l, mine) {
   const k = PT_KIND[l.kind] || { l: '', e: '•' };
   return '<div class="op-log' + (l.undone ? ' undone' : '') + '"><span class="op-log-e">' + k.e + '</span>' +
-    '<div><b>' + (l.amount > 0 ? '+' : '−') + ar(Math.abs(l.amount)) + ' ' + esc(k.l) + '</b> · ' + esc(l.members.map(nameOf).join('، ')) +
+    '<div><b>' + (l.amount > 0 ? '+' : '−') + ar(Math.abs(l.amount)) + ' ' + esc(k.l) + '</b>' + (mine ? '' : ' · ' + esc(l.members.map(nameOf).join('، '))) +
     (l.note ? '<p>' + esc(l.note) + '</p>' : '') +
     '<i>' + esc(fmtStamp(l.at)) + ' · ' + esc(nameOf(l.by_id)) + (l.undone ? ' · أُلغي' : '') + '</i></div>' +
-    (l.undone ? '' : '<button type="button" class="op-link" data-act="pt-undo" data-id="' + esc(l.batch) + '">تراجع</button>') + '</div>';
+    (l.undone || mine ? '' : '<button type="button" class="op-link" data-act="pt-undo" data-id="' + esc(l.batch) + '">تراجع</button>') + '</div>';
 }
 async function givePoints() {
   const members = Object.keys(ptSel);
@@ -386,6 +386,30 @@ function openAdjust(id) {
     '<label>السبب<input name="note" maxlength="140" placeholder="مثل: سُجّلت مرتين بالخطأ"></label>' +
     '<footer><button type="button" class="op-btn" data-act="close">إلغاء</button>' +
       '<button type="button" class="op-btn red" data-act="save-adjust"><b>حفظ</b></button></footer>';
+}
+/* One member's ledger: every grant and deduction, undone ones struck through. */
+async function openLedger(id) {
+  form = { type: 'ledger' };
+  const card = sheet();
+  card.innerHTML = '<h3>سجل نقاط ' + esc(nameOf(id)) + '</h3><p class="op-fine">جارٍ التحميل…</p>';
+  let rows;
+  try { rows = await api('points/history?member=' + encodeURIComponent(id)); }
+  catch (e) { card.innerHTML = '<h3>سجل النقاط</h3><p class="op-fine">' + esc(e.message) + '</p>'; return; }
+  if (!form || form.type !== 'ledger') return;
+  const live = rows.filter(r => !r.undone);
+  const sum = f => live.filter(f).reduce((a, r) => a + r.amount, 0);
+  const plus = sum(r => r.amount > 0), minus = -sum(r => r.amount < 0);
+  const byKind = PT_KINDS.map(([k, l, e]) => [e, l, sum(r => r.kind === k)]).filter(x => x[2]);
+  card.innerHTML =
+    '<h3>سجل نقاط ' + esc(nameOf(id)) + '</h3>' +
+    '<div class="op-ledger-sum"><div><b>' + ar(D.balances[id] || 0) + '</b><span>الرصيد</span></div>' +
+      '<div class="up"><b>+' + ar(plus) + '</b><span>أخذ</span></div>' +
+      '<div class="down"><b>−' + ar(minus) + '</b><span>خُصم</span></div></div>' +
+    (byKind.length ? '<div class="op-chips">' + byKind.map(([e, l, n]) => '<span class="op-chip">' + e + ' ' + esc(l) + ' ' + ar(n) + '</span>').join('') + '</div>' : '') +
+    (rows.length ? '<div class="op-list">' + rows.map(r => logRow({ ...r, members: [id] }, true)).join('') + '</div>' : empty('لا نقاط مسجّلة له بعد.')) +
+    (rows.length >= 200 ? '<p class="op-fine">يظهر آخر ٢٠٠ تسجيل.</p>' : '') +
+    '<footer><button type="button" class="op-btn" data-act="pt-adjust" data-id="' + esc(id) + '">✏️ تعديل يدوي</button>' +
+      '<button type="button" class="op-btn red" data-act="close"><b>إغلاق</b></button></footer>';
 }
 async function saveAdjust(btn) {
   const c = $('.op-card');
@@ -447,7 +471,7 @@ function openPersonForm(id) {
       '<option value="' + k + '"' + (p && p.status === k ? ' selected' : '') + '>' + l + '</option>').join('') + '</select></label></div>' +
     (!synced ? '<label>انضم في<input type="date" name="joined" value="' + (p && p.joined_at ? localInput(p.joined_at).slice(0, 10) : '') + '"></label>' : '') +
     '<label>ملاحظات<textarea name="note" rows="3" maxlength="600">' + esc(p ? p.note : '') + '</textarea></label>' +
-    (p ? '<div class="op-pts-mini">رصيد النقاط: <b>' + ar(D.balances[p.id] || 0) + '</b> <button type="button" class="op-link" data-act="pt-adjust" data-id="' + esc(p.id) + '">تعديل</button></div>' : '') +
+    (p ? '<div class="op-pts-mini">رصيد النقاط: <b>' + ar(D.balances[p.id] || 0) + '</b> <button type="button" class="op-link" data-act="pt-ledger" data-id="' + esc(p.id) + '">السجل</button> <button type="button" class="op-link" data-act="pt-adjust" data-id="' + esc(p.id) + '">تعديل</button></div>' : '') +
     '<footer>' + (p && p.manual ? '<button type="button" class="op-btn ghost" data-act="del-person">' + ICON.trash + '<b>حذف</b></button>' : '') +
       '<button type="button" class="op-btn" data-act="close">إلغاء</button>' +
       '<button type="button" class="op-btn red" data-act="save-person"><b>حفظ</b></button></footer>';
@@ -811,6 +835,7 @@ async function onClick(e) {
     case 'pt-none': ptSel = {}; return paint();
     case 'pt-undo': if (!confirm('التراجع عن هذا التسجيل؟')) return; return run(() => api('points/' + id + '/undo', { method: 'POST' }), 'تم التراجع');
     case 'pt-adjust': return openAdjust(id);
+    case 'pt-ledger': return openLedger(id);
     case 'save-adjust': return saveAdjust(b);
     case 'new-person': return openPersonForm(null);
     case 'edit-person': return openPersonForm(id);

@@ -257,3 +257,12 @@ code{font-family:inherit;background:rgba(255,255,255,.08);padding:1px 6px;border
 .op-rdot{width:10px;height:10px;border-radius:50%;background:var(--rc,#99aab5);margin-inline-start:6px}
 [data-multi] button{padding-inline-start:6px}
 .op-card fieldset{padding-top:4px;border-top:1px solid var(--line)}
+
+.op-who{display:flex;align-items:center;gap:9px;flex:1 1 auto;min-width:0;background:none;border:0;padding:0;color:inherit;font:inherit;cursor:pointer;text-align:start}
+.op-who:hover b{text-decoration:underline}
+.op-ledger-sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 10px}
+.op-ledger-sum>div{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center}
+.op-ledger-sum b{display:block;font-size:1.3rem}
+.op-ledger-sum span{font-size:.72rem;color:var(--dim)}
+.op-ledger-sum .up b{color:#7fd28a}
+.op-ledger-sum .down b{color:#ff8a7a}
