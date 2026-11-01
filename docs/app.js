@@ -40,6 +40,33 @@ function toast(msg) {
   clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2600);
 }
 const ICON = {
+  star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/></svg>',
+  book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6.5C10.3 5.2 7.8 4.5 4 4.5v13c3.8 0 6.3.7 8 2 1.7-1.3 4.2-2 8-2v-13c-3.8 0-6.3.7-8 2z"/><path d="M12 6.5v13"/></svg>',
+  cap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 9.5L12 5l9.5 4.5L12 14z"/><path d="M6.5 11.5v4.2c1.4 1.4 3.3 2.1 5.5 2.1s4.1-.7 5.5-2.1v-4.2M21.5 9.5v5"/></svg>',
+  bulb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.4 1.1 2.2h5c0-.8.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg>',
+  userIn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="8" r="3.6"/><path d="M3.5 20v-1a5 5 0 0 1 5-5h3a5 5 0 0 1 5 5v1M19 8v6M16 11h6"/></svg>',
+  userOut: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="8" r="3.6"/><path d="M3.5 20v-1a5 5 0 0 1 5-5h3a5 5 0 0 1 5 5v1M16 11h6"/></svg>',
+  ban: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M6 6l12 12"/></svg>',
+  unban: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8 12.3l2.7 2.7L16 9.5"/></svg>',
+  kick: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="8" r="3.6"/><path d="M3.5 20v-1a5 5 0 0 1 5-5h3a5 5 0 0 1 5 5v1M17 9l4 4M21 9l-4 4"/></svg>',
+  mute: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6.5 9H3.5v6h3L11 19z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>',
+  shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7.5 3v5.5c0 4.5-3.2 8.2-7.5 9.5-4.3-1.3-7.5-5-7.5-9.5V6z"/></svg>',
+  tag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12.2V4.5a1 1 0 0 1 1-1h7.7l8.3 8.3a1.4 1.4 0 0 1 0 2l-6.3 6.3a1.4 1.4 0 0 1-2 0z"/><circle cx="8.5" cy="8.5" r="1.4"/></svg>',
+  hash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 3.5l-2 17M16.5 3.5l-2 17M4.5 9h16M3.5 15h16"/></svg>',
+  dot: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="2.5" fill="currentColor"/></svg>',
+  note: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5h8l4 4v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1z"/><path d="M14 3.5v4h4M8.5 12.5h7M8.5 16h5"/></svg>',
+  arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 7L7 17M17 7H9M17 7v8"/></svg>',
+  siren: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 18v-6a5.5 5.5 0 0 1 11 0v6"/><path d="M4 21h16v-3H4zM12 2v2M4.2 5.2l1.4 1.4M19.8 5.2l-1.4 1.4"/></svg>',
+  cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/></svg>',
+  eye: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.5C7.5 4.5 4 8.6 2.8 11.4a1.4 1.4 0 0 0 0 1.2C4 15.4 7.5 19.5 12 19.5s8-4.1 9.2-6.9a1.4 1.4 0 0 0 0-1.2C20 8.6 16.5 4.5 12 4.5z"/><circle cx="12" cy="12" r="3.1"/></svg>',
+  room: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12.5a7.5 7.5 0 0 1-11 6.6L4.5 20l1-4A7.5 7.5 0 1 1 20 12.5z"/><path d="M9 11.5h6M9 14.5h4"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.3-4.3"/></svg>',
+  mic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>',
+  users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.4"/><path d="M2.5 19.5v-.8a4.6 4.6 0 0 1 4.6-4.6h3.8a4.6 4.6 0 0 1 4.6 4.6v.8M16 4.8a3.4 3.4 0 0 1 0 6.4M18.5 14.3a4.6 4.6 0 0 1 3 4.3v.9"/></svg>',
+  flag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 21V4.2M5.5 5.2h11l-2 3.6 2 3.6h-11"/></svg>',
+  list: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><path d="M4 6.5l1 1 2-2M4 12l1 1 2-2M4 17.5l1 1 2-2"/></svg>',
+  play: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a.8.8 0 0 0 1.2.7l10.2-6.5a.8.8 0 0 0 0-1.4L9.2 4.8A.8.8 0 0 0 8 5.5z"/></svg>',
+  send: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12 3.6 20.2a.6.6 0 0 1-.83-.72L4.9 12 2.77 4.52A.6.6 0 0 1 3.6 3.8z"/></svg>',
   x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>',
   plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5.5v13M5.5 12h13"/></svg>',
   edit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>',
@@ -53,21 +80,22 @@ const ICON = {
 /* ------------------------------------------------------------ constants -- */
 const TABS = [['plan', 'المخطط'], ['ideas', 'المقترحات'], ['points', 'النقاط'], ['people', 'الرواد'], ['logs', 'السجلات'], ['export', 'التصدير']];
 const KINDS = [
-  ['event', 'فعالية', '#e54b2a'], ['meeting', 'اجتماع', '#0b6eb9'], ['radio', 'جلسة إذاعية', '#9b5de5'],
-  ['reading', 'جلسة قرائية', '#41b9a6'], ['due', 'موعد تسليم', '#f3c02b']
+  ['event', 'فعالية', '#e54b2a', 'star', '#fff'], ['meeting', 'اجتماع', '#0b6eb9', 'users', '#fff'],
+  ['radio', 'جلسة إذاعية', '#9b5de5', 'mic', '#fff'], ['reading', 'جلسة قرائية', '#41b9a6', 'book', '#06221e'],
+  ['due', 'موعد تسليم', '#f3c02b', 'flag', '#1d1600']
 ];
-const KIND = Object.fromEntries(KINDS.map(([k, l, c]) => [k, { l, c }]));
+const KIND = Object.fromEntries(KINDS.map(([k, l, c, i, ink]) => [k, { l, c, i, ink }]));
 const IDEA_ST = [['new', 'جديد'], ['study', 'قيد الدراسة'], ['ok', 'معتمد'], ['no', 'مرفوض']];
 const IDEA_LABEL = Object.fromEntries(IDEA_ST);
-const PT_KINDS = [['stars', 'النجوم', '⭐'], ['tilawa', 'التلاوة', '📖'], ['train', 'التدريب', '🎓'], ['init', 'المبادرات', '💡']];
-const PT_KIND = Object.fromEntries(PT_KINDS.map(([k, l, e]) => [k, { l, e }]).concat([['adjust', { l: 'تعديل يدوي', e: '✏️' }]]));
+const PT_KINDS = [['stars', 'النجوم', 'star'], ['tilawa', 'التلاوة', 'book'], ['train', 'التدريب', 'cap'], ['init', 'المبادرات', 'bulb']];
+const PT_KIND = Object.fromEntries(PT_KINDS.map(([k, l, e]) => [k, { l, e }]).concat([['adjust', { l: 'تعديل يدوي', e: 'edit' }]]));
 const PT_VALUES = [5, 10, 20, 30, 60];
 const PEOPLE_ST = [['active', 'نشط'], ['quiet', 'قليل التفاعل'], ['left', 'غادر']];
 const PEOPLE_LABEL = Object.fromEntries(PEOPLE_ST);
 const LOG_TYPES = [
-  ['join', 'دخول', '🟢'], ['leave', 'خروج', '🚪'], ['ban', 'حظر', '⛔'], ['unban', 'فك حظر', '✅'], ['kick', 'طرد', '👢'],
-  ['timeout', 'إسكات', '🔇'], ['role', 'رتب', '🎖️'], ['nick', 'لقب', '🏷️'], ['msg_delete', 'حذف رسالة', '🗑️'],
-  ['msg_edit', 'تعديل رسالة', '✏️'], ['channel', 'رومات', '#️⃣'], ['other', 'أخرى', '•']
+  ['join', 'دخول', 'userIn'], ['leave', 'خروج', 'userOut'], ['ban', 'حظر', 'ban'], ['unban', 'فك حظر', 'unban'], ['kick', 'طرد', 'kick'],
+  ['timeout', 'إسكات', 'mute'], ['role', 'رتب', 'shield'], ['nick', 'لقب', 'tag'], ['msg_delete', 'حذف رسالة', 'trash'],
+  ['msg_edit', 'تعديل رسالة', 'edit'], ['channel', 'رومات', 'hash'], ['other', 'أخرى', 'dot']
 ];
 const LOG = Object.fromEntries(LOG_TYPES.map(([k, l, e]) => [k, { l, e }]));
 const POST_KEYS = [
@@ -125,7 +153,7 @@ function paintLogin() {
   const back = encodeURIComponent(location.origin + location.pathname);
   $('#app').innerHTML =
     '<main class="gate"><div class="gate-card">' +
-      '<span class="gate-ico">🚨</span>' +
+      '<span class="gate-ico">' + ICON.siren + '</span>' +
       '<h1>غرفة العمليات</h1>' +
       '<p>لوحة إدارة سيرفر نادي المدونة. سجّل الدخول بحساب الديسكورد — أعضاء الإدارة يرون اللوحة كاملة، وبقية الأعضاء صندوق المقترحات.</p>' +
       '<a class="op-btn red wide" href="' + API + '/auth/login"><b>الدخول بالديسكورد</b></a>' +
@@ -139,7 +167,7 @@ function paintShell() {
   $('#app').innerHTML =
     '<div class="op">' +
       '<header class="op-top">' +
-        '<h1 class="op-title">غرفة العمليات<span>🚨</span></h1>' +
+        '<h1 class="op-title">غرفة العمليات<span>' + ICON.siren + '</span></h1>' +
         '<div class="op-me"><img alt="" src="' + esc(me().avatar) + '"><b>' + esc(me().name) + '</b></div>' +
         '<button type="button" class="op-ico op-gear" data-act="settings" aria-label="الإعدادات" title="الإعدادات"' + (me().admin ? '' : ' hidden') + '>' + ICON.gear + '</button>' +
         '<button type="button" class="op-ico" data-act="logout" aria-label="خروج" title="خروج">' + ICON.out + '</button>' +
@@ -212,45 +240,82 @@ function eventCard(e) {
         '<li class="' + (t.done ? 'done' : '') + '"><button type="button" class="op-tick" data-act="tick" data-id="' + esc(e.id) +
         '" data-t="' + esc(t.id) + '" aria-label="' + (t.done ? 'إلغاء الإنجاز' : 'تم') + '">' + ICON.check + '</button>' +
         '<span>' + esc(t.text) + '</span>' + (t.who ? '<i>' + esc(nameOf(t.who)) + '</i>' : '') + '</li>').join('') + '</ul>' : '') +
-      (posts('supervision') ? '<button type="button" class="op-link" data-act="send-event" data-id="' + esc(e.id) + '">إرسال إلى الإشراف ↗</button>' : '') +
+      (posts('supervision') ? '<button type="button" class="op-link" data-act="send-event" data-id="' + esc(e.id) + '">إرسال إلى الإشراف ' + ICON.arrow + '</button>' : '') +
     '</div></article>';
 }
+/* The event sheet is the library's task card: the موعد itself heads it, drawn
+   in its kind's colour and repainted as you type; the kind pills sit under
+   it; then a rail of start / end / supervisors, a borderless title, and a foot
+   rail whose round button saves. */
 function openEventForm(id) {
   const e = id ? D.events.find(x => x.id === id) : null;
-  form = { type: 'event', id, sups: Object.assign({}, e && e.sups),
+  form = { type: 'event', id, kind: e ? e.kind : 'event', supOpen: false, sups: Object.assign({}, e && e.sups),
            tasks: Object.entries((e && e.tasks) || {}).map(([tid, t]) => ({ id: tid, text: t.text, who: t.who || '', done: !!t.done })) };
-  const card = sheet();
+  const card = sheet('ev');
+  const date = (f, label, ico, ms) =>
+    '<span class="ev-dwrap"><button type="button" class="ev-date' + (ms ? ' on' : '') + '" data-act="pick-date" data-f="' + f + '">' +
+      ico + '<span data-dlabel="' + f + '">' + (ms ? esc(fmtShort(ms) + ' · ' + fmtTime(ms)) : label) + '</span></button>' +
+    '<input type="datetime-local" name="' + f + '" tabindex="-1" aria-hidden="true" value="' + localInput(ms) + '"></span>';
   card.innerHTML =
-    '<h3>' + (id ? 'تعديل الموعد' : 'موعد جديد') + '</h3>' +
-    '<label>العنوان<input name="title" maxlength="120" value="' + esc(e ? e.title : '') + '"></label>' +
-    '<label>النوع<select name="kind">' + KINDS.map(([k, l]) =>
-      '<option value="' + k + '"' + ((e ? e.kind : 'event') === k ? ' selected' : '') + '>' + l + '</option>').join('') + '</select></label>' +
-    '<div class="op-two"><label>يبدأ<input type="datetime-local" name="at" value="' + localInput(e ? e.at : null) + '"></label>' +
-    '<label>ينتهي<input type="datetime-local" name="end" value="' + localInput(e ? e.end_at : null) + '"></label></div>' +
-    '<label>المكان / الروم<input name="place" maxlength="80" value="' + esc(e ? e.place : '') + '" placeholder="☕ المقهى"></label>' +
-    '<label>ملاحظة<textarea name="note" rows="2" maxlength="600">' + esc(e ? e.note : '') + '</textarea></label>' +
-    '<fieldset><legend>المشرفون</legend><input class="op-q" data-q="sups" placeholder="بحث…">' +
-      '<div class="op-people" data-pick="sups"></div><div class="op-roles"></div></fieldset>' +
-    '<fieldset><legend>المهام</legend><div class="op-tlist"></div>' +
-      '<button type="button" class="op-link" data-act="add-task">+ مهمة</button></fieldset>' +
-    '<footer>' + (id ? '<button type="button" class="op-btn ghost" data-act="del-event">' + ICON.trash + '<b>حذف</b></button>' : '') +
-      '<button type="button" class="op-btn" data-act="close">إلغاء</button>' +
-      '<button type="button" class="op-btn red" data-act="save-event"><b>حفظ</b></button></footer>';
+    '<div class="ev-pv">' +
+      '<div class="ev-hero"><span class="ev-hero-i"></span><div class="ev-hero-txt"><b></b><span></span></div></div>' +
+      '<div class="ev-kinds">' + KINDS.map(([k, l, c]) =>
+        '<button type="button" data-evk="' + k + '" style="--k:' + c + '" class="' + (form.kind === k ? 'on' : '') + '"><i></i>' + l + '</button>').join('') + '</div>' +
+    '</div>' +
+    '<div class="ev-top">' +
+      date('at', 'البدء', ICON.play, e && e.at) + date('end', 'الانتهاء', ICON.cal, e && e.end_at) +
+      '<span class="ev-spacer"></span>' +
+      '<button type="button" class="ev-sup" data-act="ev-sups" aria-expanded="false">' + ICON.eye + '<span class="ev-suplbl">المشرفون</span><span class="ev-avs"></span></button>' +
+      '<button type="button" class="ev-x" data-act="close" aria-label="إغلاق">' + ICON.x + '</button>' +
+    '</div>' +
+    '<div class="ev-body">' +
+      '<input name="title" class="ev-title" maxlength="120" autocomplete="off" placeholder="اسم الموعد" value="' + esc(e ? e.title : '') + '">' +
+      '<textarea name="note" class="ev-desc" rows="2" maxlength="600" placeholder="ملاحظة…">' + esc(e ? e.note : '') + '</textarea>' +
+      '<label class="ev-room">' + ICON.room + '<input name="place" maxlength="80" autocomplete="off" placeholder="المكان أو الروم — مثل المقهى" value="' + esc(e ? e.place : '') + '"></label>' +
+      '<section class="ev-sups" hidden>' +
+        '<label class="op-search">' + ICON.search + '<input class="op-q" data-q="sups" placeholder="ابحث عن عضو…" autocomplete="off"></label>' +
+        '<div class="op-people" data-pick="sups"></div><div class="op-roles"></div>' +
+      '</section>' +
+      '<section class="ev-tasks"><h4>' + ICON.list + 'المهام</h4><div class="op-tlist"></div>' +
+        '<button type="button" class="ev-chip add" data-act="add-task">' + ICON.plus + 'مهمة</button></section>' +
+    '</div>' +
+    '<div class="ev-foot">' +
+      (id ? '<button type="button" class="ev-del" data-act="del-event" aria-label="حذف الموعد" title="حذف الموعد">' + ICON.trash + '</button>' : '') +
+      '<span class="ev-spacer"></span>' +
+      '<button type="button" class="ev-send" data-act="save-event" aria-label="' + (id ? 'حفظ' : 'إضافة') + '" title="' + (id ? 'حفظ' : 'إضافة') + '">' + ICON.send + '</button>' +
+    '</div>';
   paintPick('sups', form.sups);
   paintRoles();
   paintTaskRows();
+  paintEvHero();
+}
+function paintEvHero() {
+  const c = $('.op-card.ev'); if (!c) return;
+  const k = KIND[form.kind] || KIND.event, v = n => $('[name="' + n + '"]', c).value.trim();
+  c.style.setProperty('--c', k.c); c.style.setProperty('--ink', k.ink);
+  const at = fromInput(v('at')), t = $('.ev-hero-txt b', c);
+  $('.ev-hero-i', c).innerHTML = ICON[k.i];
+  t.textContent = v('title') || 'اسم الموعد';
+  t.classList.toggle('ph', !v('title'));
+  $('.ev-hero-txt span', c).textContent = [k.l, at ? fmtDay(at) + ' · ' + fmtTime(at) : 'بلا موعد', v('place')].filter(Boolean).join(' · ');
 }
 function paintRoles() {
   const host = $('.op-roles'); if (!host) return;
-  host.innerHTML = Object.keys(form.sups).map(s =>
-    '<label class="op-role"><span>' + esc(nameOf(s)) + '</span><input data-role="' + esc(s) + '" maxlength="60" placeholder="دوره (اختياري)" value="' +
+  const ids = Object.keys(form.sups);
+  host.innerHTML = ids.map(s =>
+    '<label class="op-role"><img src="' + esc(avatarOf(s)) + '" alt=""><span>' + esc(nameOf(s)) + '</span><input data-role="' + esc(s) + '" maxlength="60" placeholder="دوره (اختياري)" value="' +
     esc(form.sups[s] === true ? '' : form.sups[s]) + '"></label>').join('');
+  const avs = $('.ev-avs'); if (!avs) return;
+  avs.innerHTML = ids.slice(0, 4).map(s => '<img src="' + esc(avatarOf(s)) + '" alt="">').join('') + (ids.length > 4 ? '<i>+' + ar(ids.length - 4) + '</i>' : '');
+  $('.ev-sup').classList.toggle('on', !!ids.length);
 }
 function paintTaskRows() {
   const host = $('.op-tlist'); if (!host) return;
   host.innerHTML = form.tasks.map((t, i) =>
-    '<div class="op-trow" data-i="' + i + '"><input data-f="text" maxlength="140" value="' + esc(t.text) + '" placeholder="المهمة">' +
-    '<select data-f="who"><option value="">—</option>' + present().map(m =>
+    '<div class="op-trow' + (t.done ? ' done' : '') + '" data-i="' + i + '">' +
+    '<button type="button" class="ev-tick" data-act="ev-tdone" data-i="' + i + '" aria-label="' + (t.done ? 'إلغاء الإنجاز' : 'تم') + '">' + ICON.check + '</button>' +
+    '<input data-f="text" maxlength="140" value="' + esc(t.text) + '" placeholder="المهمة">' +
+    '<select data-f="who" aria-label="المكلَّف"><option value="">بلا مكلَّف</option>' + present().map(m =>
       '<option value="' + esc(m.id) + '"' + (t.who === m.id ? ' selected' : '') + '>' + esc(m.name) + '</option>').join('') + '</select>' +
     '<button type="button" class="op-ico" data-act="rm-task" data-i="' + i + '" aria-label="إزالة">' + ICON.x + '</button></div>').join('');
 }
@@ -260,7 +325,7 @@ async function saveEvent(btn) {
   form.tasks.filter(t => t.text.trim()).forEach((t, i) => {
     tasks[t.id || ('t' + Date.now().toString(36) + i)] = { text: t.text.trim(), who: t.who || null, done: !!t.done };
   });
-  const rec = { title: v('title'), kind: v('kind'), at: fromInput(v('at')), end_at: fromInput(v('end')), place: v('place'), note: v('note'), sups: form.sups, tasks };
+  const rec = { title: v('title'), kind: form.kind, at: fromInput(v('at')), end_at: fromInput(v('end')), place: v('place'), note: v('note'), sups: form.sups, tasks };
   if (!rec.title || !rec.at) return toast('العنوان والموعد مطلوبان');
   btn.disabled = true;
   try {
@@ -331,13 +396,13 @@ function paintPoints() {
   el.innerHTML =
     '<div class="op-compose">' +
       '<div class="op-kinds">' + PT_KINDS.map(([k, l, e]) =>
-        '<button type="button" data-ptk="' + k + '" class="' + (ptKind === k ? 'on' : '') + '"><span>' + e + '</span>' + l + '</button>').join('') + '</div>' +
+        '<button type="button" data-ptk="' + k + '" class="' + (ptKind === k ? 'on' : '') + '"><span>' + ICON[e] + '</span>' + l + '</button>').join('') + '</div>' +
       '<div class="op-row op-amts">' + PT_VALUES.map(v =>
         '<button type="button" data-amt="' + v + '" class="' + (ptAmt === v ? 'on' : '') + '">+' + ar(v) + '</button>').join('') +
         '<input type="text" class="op-amt" inputmode="numeric" value="' + (PT_VALUES.includes(ptAmt) ? '' : ar(ptAmt)) + '" placeholder="عدد آخر">' +
       '</div>' +
       '<input class="op-pnote" maxlength="140" placeholder="التفاصيل — مثل: جلسة الأربعاء، ٣٣ دقيقة">' +
-      '<div class="op-row"><input class="op-q" data-q="pts" placeholder="بحث عن عضو…">' +
+      '<div class="op-row"><label class="op-search op-q">' + ICON.search + '<input data-q="pts" placeholder="ابحث عن عضو…" autocomplete="off"></label>' +
         '<button type="button" class="op-link" data-act="pt-none"' + (n ? '' : ' hidden') + '>إلغاء التحديد</button></div>' +
       '<div class="op-people" data-pick="pts"></div>' +
       '<button type="button" class="op-btn red wide" data-act="pt-go"' + (n && !ptBusy ? '' : ' disabled') + '><b>' + goLabel() + '</b></button>' +
@@ -347,7 +412,7 @@ function paintPoints() {
         '<li><span class="op-rank">' + ar(i + 1) + '</span><button type="button" class="op-who" data-act="pt-ledger" data-id="' + esc(m.id) + '" title="سجل نقاطه"><img src="' + esc(m.avatar) + '" alt="" loading="lazy"><b>' + esc(m.name) + '</b></button>' +
         '<em>' + ar(t) + '</em><button type="button" class="op-ico" data-act="pt-adjust" data-id="' + esc(m.id) + '" aria-label="تعديل يدوي" title="تعديل يدوي">' + ICON.edit + '</button></li>').join('') + '</ol>'
         : empty('لا نقاط بعد.')) +
-        '<button type="button" class="op-link" data-act="pt-adjust">✏️ تعديل يدوي لعضو آخر</button></div>' +
+        '<button type="button" class="op-link" data-act="pt-adjust">' + ICON.edit + ' تعديل يدوي لعضو آخر</button></div>' +
       '<div><h3 class="op-h">آخر التسجيلات</h3>' + ((D.recent || []).length ? '<div class="op-list">' + D.recent.map(logRow).join('') + '</div>' : empty('لا تسجيلات بعد.')) + '</div>' +
     '</div>';
   paintPick('pts', ptSel, null, el);
@@ -356,7 +421,7 @@ function paintPoints() {
 const goLabel = () => { const n = Object.keys(ptSel).length; return n ? 'أضف ' + ar(ptAmt) + ' نقطة لـ ' + ar(n) + (n === 1 ? ' عضو' : ' أعضاء') : 'اختر الأعضاء'; };
 function logRow(l, mine) {
   const k = PT_KIND[l.kind] || { l: '', e: '•' };
-  return '<div class="op-log' + (l.undone ? ' undone' : '') + '"><span class="op-log-e">' + k.e + '</span>' +
+  return '<div class="op-log' + (l.undone ? ' undone' : '') + '"><span class="op-log-e">' + (ICON[k.e] || ICON.dot) + '</span>' +
     '<div><b>' + (l.amount > 0 ? '+' : '−') + ar(Math.abs(l.amount)) + ' ' + esc(k.l) + '</b>' + (mine ? '' : ' · ' + esc(l.members.map(nameOf).join('، '))) +
     (l.note ? '<p>' + esc(l.note) + '</p>' : '') +
     '<i>' + esc(fmtStamp(l.at)) + ' · ' + esc(nameOf(l.by_id)) + (l.undone ? ' · أُلغي' : '') + '</i></div>' +
@@ -370,7 +435,7 @@ async function givePoints() {
   ptBusy = true; paint();
   try {
     await api('points', { method: 'POST', body: { members, amount: ptAmt, kind: ptKind, note: ($('.op-pnote').value || '').trim() } });
-    ptSel = {}; toast('أُضيفت النقاط ✨');
+    ptSel = {}; toast('أُضيفت النقاط');
   } catch (e) { toast(e.message); }
   ptBusy = false; await reload();
 }
@@ -399,7 +464,7 @@ async function openLedger(id) {
   const live = rows.filter(r => !r.undone);
   const sum = f => live.filter(f).reduce((a, r) => a + r.amount, 0);
   const plus = sum(r => r.amount > 0), minus = -sum(r => r.amount < 0);
-  const byKind = PT_KINDS.map(([k, l, e]) => [e, l, sum(r => r.kind === k)]).filter(x => x[2]);
+  const byKind = PT_KINDS.map(([k, l, e]) => [ICON[e], l, sum(r => r.kind === k)]).filter(x => x[2]);
   card.innerHTML =
     '<h3>سجل نقاط ' + esc(nameOf(id)) + '</h3>' +
     '<div class="op-ledger-sum"><div><b>' + ar(D.balances[id] || 0) + '</b><span>الرصيد</span></div>' +
@@ -408,7 +473,7 @@ async function openLedger(id) {
     (byKind.length ? '<div class="op-chips">' + byKind.map(([e, l, n]) => '<span class="op-chip">' + e + ' ' + esc(l) + ' ' + ar(n) + '</span>').join('') + '</div>' : '') +
     (rows.length ? '<div class="op-list">' + rows.map(r => logRow({ ...r, members: [id] }, true)).join('') + '</div>' : empty('لا نقاط مسجّلة له بعد.')) +
     (rows.length >= 200 ? '<p class="op-fine">يظهر آخر ٢٠٠ تسجيل.</p>' : '') +
-    '<footer><button type="button" class="op-btn" data-act="pt-adjust" data-id="' + esc(id) + '">✏️ تعديل يدوي</button>' +
+    '<footer><button type="button" class="op-btn" data-act="pt-adjust" data-id="' + esc(id) + '">' + ICON.edit + '<b>تعديل يدوي</b></button>' +
       '<button type="button" class="op-btn red" data-act="close"><b>إغلاق</b></button></footer>';
 }
 async function saveAdjust(btn) {
@@ -449,7 +514,7 @@ function paintPeople() {
         '<img src="' + esc(p.avatar || avatarOf('')) + '" alt="" loading="lazy">' +
         '<b>' + esc(p.name) + (p.manual ? ' <small>يدوي</small>' : '') + '</b>' +
         '<span>' + esc([p.username ? '@' + p.username : '', p.label || (p.roles || []).map(r => roleName[r]).filter(Boolean).slice(0, 2).join('، ')].filter(Boolean).join(' · ')) + '</span>' +
-        '<i>' + esc(PEOPLE_LABEL[stOf(p)]) + (p.joined_at ? ' · منذ ' + esc(fmtShort(p.joined_at)) : '') + (p.note ? ' · 📝' : '') + '</i>' +
+        '<i>' + esc(PEOPLE_LABEL[stOf(p)]) + (p.joined_at ? ' · منذ ' + esc(fmtShort(p.joined_at)) : '') + (p.note ? ' · ' + ICON.note : '') + '</i>' +
       '</button>').join('') + '</div>'
       : empty(all.length ? 'لا نتائج.' : 'لم تتم المزامنة بعد — اضغط زر المزامنة.'));
   return el;
@@ -520,7 +585,7 @@ async function loadLogs(fresh) {
 }
 function logEntry(l) {
   const t = LOG[l.type] || LOG.other;
-  return '<div class="op-logev' + (l.hidden ? ' hidden-ev' : '') + '"><span class="op-log-e" title="' + esc(t.l) + '">' + t.e + '</span>' +
+  return '<div class="op-logev' + (l.hidden ? ' hidden-ev' : '') + '"><span class="op-log-e" title="' + esc(t.l) + '">' + (ICON[t.e] || ICON.dot) + '</span>' +
     '<div><b>' + esc(l.summary) + '</b>' + (l.detail ? '<p>' + esc(l.detail) + '</p>' : '') +
     '<i>' + esc(fmtStamp(l.at)) + ' · ' + ({ audit: 'سجل التدقيق', channel: 'روم logs', manual: 'يدوي — ' + nameOf(l.edited_by) })[l.source] +
       (l.edited_by && l.source !== 'manual' ? ' · عُدّل' : '') + (l.hidden ? ' · مخفي' : '') + '</i></div>' +
@@ -753,23 +818,31 @@ async function syncNow(btn) {
 }
 
 /* ------------------------------------------------------------ people pick -- */
+/* Faces, each with its name under it. The chosen come first; the rest are
+   capped so a 1,300-member server does not paint 1,300 faces — search finds them. */
+const PICK_CAP = 90;
 function paintPick(which, into, list, scope) {
   const host = $('[data-pick="' + which + '"]', scope); if (!host) return;
   const q = (($('[data-q="' + which + '"]', scope) || {}).value || '').trim().toLowerCase();
-  const people = (list || present()).filter(m => !q || (m.name + ' ' + (m.username || '')).toLowerCase().includes(q));
-  host.innerHTML = people.map(m =>
-    '<button type="button" data-pick-id="' + esc(m.id) + '" class="' + (into[m.id] ? 'on' : '') + '">' +
-    '<img src="' + esc(m.avatar || avatarOf('')) + '" alt="" loading="lazy"><span>' + esc(m.name) + '</span></button>').join('') ||
+  const all = (list || present()).filter(m => !q || (m.name + ' ' + (m.username || '')).toLowerCase().includes(q));
+  const people = all.filter(m => into[m.id]).concat(all.filter(m => !into[m.id]));
+  const shown = people.slice(0, Math.max(PICK_CAP, Object.keys(into).length));
+  host.innerHTML = shown.map(m =>
+    '<button type="button" data-pick-id="' + esc(m.id) + '" class="' + (into[m.id] ? 'on' : '') + '" title="' + esc(m.username || m.name) + '">' +
+    '<span class="pp-av"><img src="' + esc(m.avatar || avatarOf('')) + '" alt="" loading="lazy"><i>' + ICON.check + '</i></span>' +
+    '<span class="pp-name">' + esc(m.name) + '</span></button>').join('') +
+    (people.length > shown.length ? '<p class="op-fine pp-more">و' + ar(people.length - shown.length) + ' غيرهم — ابحث بالاسم.</p>' : '') ||
     '<p class="op-fine">لا أحد بهذا الاسم.</p>';
 }
 
 /* ----------------------------------------------------------------- sheet -- */
-function sheet() {
+function sheet(variant) {
   const sh = $('.op-sheet');
   sh.hidden = false; void sh.offsetWidth; sh.classList.add('on');
   const card = $('.op-card', sh);
+  card.className = 'op-card' + (variant ? ' ' + variant : ''); card.removeAttribute('style');
   card.scrollTop = 0;
-  setTimeout(() => { const f = $('input:not([disabled]),textarea', card); if (f && matchMedia('(pointer:fine)').matches) f.focus(); }, 60);
+  setTimeout(() => { const f = $('input:not([disabled]):not([tabindex="-1"]),textarea', card); if (f && matchMedia('(pointer:fine)').matches) f.focus(); }, 60);
   return card;
 }
 function closeSheet() {
@@ -806,6 +879,9 @@ async function onClick(e) {
     return;
   }
   if (b.dataset.mid) { b.classList.toggle('on'); return; }
+  if (b.dataset.evk) {
+    form.kind = b.dataset.evk; $$('[data-evk]').forEach(x => x.classList.toggle('on', x === b)); return paintEvHero();
+  }
   if (b.dataset.ptk) { ptKind = b.dataset.ptk; $$('[data-ptk]').forEach(x => x.classList.toggle('on', x === b)); return; }
   if (b.dataset.amt) { ptAmt = +b.dataset.amt; $$('[data-amt]').forEach(x => x.classList.toggle('on', x === b)); $('.op-amt').value = ''; $('[data-act="pt-go"] b').textContent = goLabel(); return; }
   if (b.dataset.ltype != null) { logType = b.dataset.ltype; $$('[data-ltype]').forEach(x => x.classList.toggle('on', x === b)); return loadLogs(true); }
@@ -826,6 +902,10 @@ async function onClick(e) {
       if (!confirm('حذف هذا الموعد؟')) return;
       closeSheet(); return run(() => api('events/' + form.id, { method: 'DELETE' }), 'حُذف');
     case 'add-task': form.tasks.push({ text: '', who: '', done: false }); paintTaskRows(); return $$('.op-trow input').pop().focus();
+    case 'pick-date': { const inp = b.nextElementSibling; try { inp.showPicker(); } catch (err) { inp.focus(); inp.click(); } return; }
+    case 'ev-sups': { form.supOpen = !form.supOpen; $('.ev-sups').hidden = !form.supOpen; b.setAttribute('aria-expanded', form.supOpen);
+      if (form.supOpen) $('.ev-sups .op-q').focus(); return; }
+    case 'ev-tdone': { const t = form.tasks[+b.dataset.i]; t.done = !t.done; return paintTaskRows(); }
     case 'rm-task': form.tasks.splice(+b.dataset.i, 1); return paintTaskRows();
     case 'tick': return tick(id, b.dataset.t);
     case 'send-event': try { const r = await api('events/' + id + '/send', { method: 'POST' }); toast(r.ok ? 'أُرسل إلى الإشراف' : 'تعذّر الإرسال'); } catch (err) { toast(err.message); } return;
@@ -852,6 +932,12 @@ async function onClick(e) {
 }
 function onChange(e) {
   const t = e.target;
+  if (t.type === 'datetime-local' && t.closest('.op-card.ev')) {
+    const ms = fromInput(t.value), lb = $('[data-dlabel="' + t.name + '"]');
+    lb.textContent = ms ? fmtShort(ms) + ' · ' + fmtTime(ms) : (t.name === 'at' ? 'البدء' : 'الانتهاء');
+    lb.parentNode.classList.toggle('on', !!ms);
+    return paintEvHero();
+  }
   if (t.dataset.act === 'idea-st') {
     api('ideas/' + t.dataset.id, { method: 'PATCH', body: { status: t.value } }).then(reload).catch(err => toast(err.message));
     return;
@@ -872,6 +958,7 @@ function onChange(e) {
 }
 function onInput(e) {
   const t = e.target;
+  if ((t.name === 'title' || t.name === 'place') && t.closest('.op-card.ev')) return paintEvHero();
   if (t.dataset.role && form && form.sups[t.dataset.role]) { form.sups[t.dataset.role] = t.value.trim() || true; return; }
   if (t.closest('.op-trow')) { form.tasks[+t.closest('.op-trow').dataset.i][t.dataset.f] = t.value; return; }
   if (t.dataset.q === 'pts') return paintPick('pts', ptSel);
